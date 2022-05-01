@@ -7,7 +7,7 @@ const { app, BrowserWindow, Menu, ipcMain } = electron;
 let mainWindow;
 let newApp;
 let listApp;
-let webCam = null;
+let webCam;
 let allAppointments = [];
 
 fs.readFile("appointments.json", (err, jsonAppointments) => {
@@ -41,8 +41,7 @@ const newAppCreator = () => {
 		height: 400,
 		title: "Create New User"
 	});
-	newApp.setMenu(null);
-	newApp.loadURL(`file://${__dirname}/newApp.html`);
+	newApp.loadURL(`file://${__dirname}/newapp.html`);
 	newApp.on("closed", () => (newApp = null));
 };
 

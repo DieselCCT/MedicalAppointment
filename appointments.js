@@ -33,3 +33,44 @@ ipcRenderer.on("appointment:response:today", (event, appointments) => {
 const done = id => {
 	ipcRenderer.send("appointment:done", id);
 };*/
+'use strict';
+
+const remote = require('@electron/remote/main')
+const electron = require("electron");
+const BrowserWindow = electron
+const btntake = document.getElementById("btn");
+let webCam = electron.BrowserWindow;
+
+const webCamCreator = () => {
+	webCam = new BrowserWindow({
+		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
+		useContentSize: true,
+		width: 800,
+		height: 600,
+		resizable: false,
+		fullscreen: false,
+		title: "Take a Picture"
+	});
+	remote.initialize();
+	remote.enable(webCam.webContents);
+	webCam.setMenu(null);
+	webCam.loadURL(`file://${__dirname}/index.html`);
+	webCam.on("closed", () => (webCam = null));
+};
+
+btntake.addEventListener("click", (event) => {
+	alert("helloo")
+	webCam = new BrowserWindow({
+		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
+		useContentSize: true,
+		width: 800,
+		height: 600,
+		resizable: false,
+		fullscreen: false,
+		title: "Take a Picture"
+	});
+	require("@electron/remote/main").initialize();
+	require("@electron/remote/main").enable(webCam.webContents);
+	webCam.loadURL(`file://${__dirname}/index.html`);
+	webCam.on("closed", () => (webCam = null));
+});
