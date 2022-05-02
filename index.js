@@ -3,12 +3,15 @@
 const electron = require("electron");
 const fs = require("fs");
 const uuid = require("uuid");
+const remote = require('@electron/remote/main')
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 let mainWindow;
 let newApp;
 let listApp;
-let webCam;
+let webCam = electron.BrowserWindow;
 let allAppointments = [];
+
+console.log(app);
 
 fs.readFile("appointments.json", (err, jsonAppointments) => {
 	if (!err) {
@@ -30,6 +33,8 @@ app.on("ready", () => {
 	// 	app.quit();
 	// 	mainWindow = null;
 	// });
+	remote.initialize();
+	remote.enable(mainWindow.webContents);
 	const mainMenu = Menu.buildFromTemplate(menuTemplate);
 	Menu.setApplicationMenu(mainMenu);
 });
@@ -68,10 +73,10 @@ const webCamCreator = () => {
 		fullscreen: false,
 		title: "Take a Picture"
 	});
-	require("@electron/remote/main").initialize();
-	require("@electron/remote/main").enable(webCam.webContents);
+	remote.initialize();
+	remote.enable(webCam.webContents);
 	webCam.setMenu(null);
-	webCam.loadURL(`file://${__dirname}/newApp.html`);
+	webCam.loadURL(`file://${__dirname}/index.html`);
 	webCam.on("closed", () => (webCam = null));
 };
 
@@ -121,12 +126,12 @@ const menuTemplate = [
 		 listAppCreator();
 	 }
  },
-//  {
-// 	 label: "Take a Picture",
-// 	 click() {
-// 		 webCamCreator();
-// 	 }
-//  },
+{
+label: "Take a Picture",
+click() {
+webCamCreator();
+}
+},
  {
  label: "Quit",
  accelerator: process.platform === "darwin" ? "Command+Q" : "Ctrl+Q",

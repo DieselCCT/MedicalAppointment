@@ -1,10 +1,8 @@
-'use strict';
-const electron = require('electron');
-const dialog = require('@electron/remote').dialog;
+const dialog = electron.dialog;
 const fs = require('fs');
-const mediaStream = new MediaStream();
 let photoData;
 let video;
+
 function savePhoto (filePath) {
   if (filePath) {
     fs.writeFile(filePath, photoData, 'base64', (err) => {
@@ -15,16 +13,30 @@ function savePhoto (filePath) {
     });
   }
 }
+
 function initialize () {
   video = window.document.querySelector('video');
   let errorCallback = (error) => {
-    console.log(`There was an error connecting to the video stream: ${error.message}`);
+    console.log(`There was an error connecting to the video stream:
+    ${error.message}`);
   };
-
-  window.navigator.webkitGetUserMedia({video: true}, (localMediaStream) => {
-    video.srcObject = localMediaStream;
+  /*window.navigator.webkitGetUserMedia({video: true}, (localMediaStream) => {
+    video.src = mediaStream;
   }, errorCallback);
+  console.log(errorCallback)*/
+  navigator.webkitGetUserMedia({ audio: true, video: { width: 1280, height: 720 } },
+  function(stream) {
+    var video = document.querySelector('video');
+    video.src = window.webkitURL.createObjectURL(stream);
+    video.onloadedmetadata = function(e) {
+      video.play();
+    };
+ },
+ function(err) {
+    console.log("The following error occurred: " + err.name);
+ });
 }
+
 function takePhoto () {
   let canvas = window.document.querySelector('canvas');
   canvas.getContext('2d').drawImage(video, 0, 0, 800, 600);
@@ -35,4 +47,6 @@ function takePhoto () {
     buttonLabel: 'Save photo'
   }, savePhoto);
 }
+console.log("starting")
 window.onload = initialize;
+console.log("done")

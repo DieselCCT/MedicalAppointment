@@ -35,30 +35,29 @@ const done = id => {
 };*/
 'use strict';
 
-const remote = require('@electron/remote/main')
-const electron = require("electron");
-const BrowserWindow = electron
-const btntake = document.getElementById("btn");
-let webCam = electron.BrowserWindow;
+const electron = require("@electron/remote");
+const BrowserWindow = electron.BrowserWindow;
+const button = document.getElementById("btn");
 
 const webCamCreator = () => {
-	webCam = new BrowserWindow({
+	let webCam = new BrowserWindow({
 		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
 		useContentSize: true,
-		width: 800,
-		height: 600,
-		resizable: false,
+		resizable: true,
 		fullscreen: false,
 		title: "Take a Picture"
 	});
-	remote.initialize();
-	remote.enable(webCam.webContents);
 	webCam.setMenu(null);
 	webCam.loadURL(`file://${__dirname}/index.html`);
 	webCam.on("closed", () => (webCam = null));
 };
 
-btntake.addEventListener("click", (event) => {
+button.addEventListener('click', () => {
+	alert("hello");
+	webCamCreator();
+});
+
+/*btntake.addEventListener("click", (event) => {
 	alert("helloo")
 	webCam = new BrowserWindow({
 		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
@@ -73,4 +72,4 @@ btntake.addEventListener("click", (event) => {
 	require("@electron/remote/main").enable(webCam.webContents);
 	webCam.loadURL(`file://${__dirname}/index.html`);
 	webCam.on("closed", () => (webCam = null));
-});
+});*/
