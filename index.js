@@ -5,6 +5,7 @@ const fs = require("fs");
 const uuid = require("uuid");
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 let mainWindow;
+let loginWindow;
 let newApp;
 let listApp;
 let webCam = null;
@@ -19,19 +20,35 @@ fs.readFile("appointments.json", (err, jsonAppointments) => {
 });
 
 app.on("ready", () => {
-	mainWindow = new BrowserWindow({
-		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
-		title: "Gym Registration App"
-	});
-	mainWindow.loadURL(`file://${__dirname}/appointments.html`);
+
+	loginWindow = new BrowserWindow({
+		webPreferences: {
+		nodeIntegration: true
+		},
+		title: "login"
+		});
+		loginWindow.loadURL(`file://${__dirname}/login.html`);
+		loginWindow.on("closed", () => {
+		const jsonAppointments = JSON.stringify(allAppointments);
+		fs.writeFileSync("db.json", jsonAppointments);
+		app.quit();
+		loginWindow = null;
+		});
+
+	
+	//mainWindow = new BrowserWindow({
+	//	webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
+		//title: "Gym Registration App"
+	//});
+	//mainWindow.loadURL(`file://${__dirname}/appointments.html`);
 	// mainWindow.on("closed", () => {
 	// 	const jsonAppointments = JSON.stringify(allAppointments);
 	// 	fs.writeFileSync("appointments.json", jsonAppointments);
 	// 	app.quit();
 	// 	mainWindow = null;
 	// });
-	const mainMenu = Menu.buildFromTemplate(menuTemplate);
-	Menu.setApplicationMenu(mainMenu);
+	//const mainMenu = Menu.buildFromTemplate(menuTemplate);
+	//Menu.setApplicationMenu(mainMenu);
 });
 
 const newAppCreator = () => {
@@ -45,6 +62,20 @@ const newAppCreator = () => {
 	newApp.loadURL(`file://${__dirname}/newApp.html`);
 	newApp.on("closed", () => (newApp = null));
 };
+
+const mainWindowCreator = () => {
+	mainWindow = new BrowserWindow({
+		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
+		width: 600,
+		height: 400,
+		title: "See All Users"
+	});
+	mainWindow.setMenu(null);
+	mainWindow.loadURL(`file://${__dirname}/appointments.html`);
+	mainWindow.on("closed", () => (listApp = null));
+};
+
+
 
 const listAppCreator = () => {
 	listApp = new BrowserWindow({
@@ -81,6 +112,11 @@ const webCamCreator = () => {
 // 	const filtered = allAppointments.filter(appointment => appointment.date == today);
 // 	mainWindow.webContents.send("appointment:response:today", filtered);
 // };
+
+ipcMain.on("appointment:request:list", event => {
+	mainWindow.webContents.send("appointment:response:list",
+	allAppointments);
+});
 
 ipcMain.on("appointment:request:list", event => {
 	listApp.webContents.send("appointment:response:list",

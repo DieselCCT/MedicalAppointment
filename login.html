@@ -1,0 +1,40 @@
+<html>
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="app.css" media="screen">
+        <title> Login </title>
+        <div id="list"></div>
+    </head>
+<body>
+    <form>
+        <h3> Login </h3>
+        <input id="login" type="text" name="login" placeholder="Your email..."/>
+        <input id="password" type="password" name="password" placeholder="Your password..."/>
+        <input type="submit" onclick = "log(); return false "name="action" value="Send"/>
+    </form>
+
+    <script>
+                            const electron = require("electron");
+                            const { ipcRenderer } = electron;
+                            const listDiv = document.getElementById("list");
+                            listDiv.innerHTML = "";
+                            
+            function log(){
+                var login = document.getElementById('login').value;
+                var password = document.getElementById('password').value;
+
+                if(login == 'admin' && password == 'admin'){
+                    alert('Welcome');
+                    location.href = "appointments.html";
+
+                }else{
+                    alert('wrong password');
+                }
+            }
+    </script>
+
+
+</body>
+
+
+</html>
