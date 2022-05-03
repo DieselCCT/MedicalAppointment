@@ -1,4 +1,4 @@
-const dialog = electron.dialog;
+const dialog = remote.dialog;
 const fs = require('fs');
 let photoData;
 let video;
@@ -15,7 +15,6 @@ function savePhoto (filePath) {
 }
 
 function initialize () {
-  video = window.document.querySelector('video');
   let errorCallback = (error) => {
     console.log(`There was an error connecting to the video stream:
     ${error.message}`);
@@ -26,8 +25,9 @@ function initialize () {
   console.log(errorCallback)*/
   navigator.webkitGetUserMedia({ audio: true, video: { width: 1280, height: 720 } },
   function(stream) {
-    var video = document.querySelector('video');
-    video.src = window.webkitURL.createObjectURL(stream);
+    var video = window.document.getElementById("video");
+    console.log(video)
+    video.srcObject = stream;
     video.onloadedmetadata = function(e) {
       video.play();
     };

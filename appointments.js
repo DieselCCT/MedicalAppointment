@@ -35,25 +35,28 @@ const done = id => {
 };*/
 'use strict';
 
-const electron = require("@electron/remote");
-const BrowserWindow = electron.BrowserWindow;
+const remote = require("@electron/remote");
+//const remoteMain = remote.require("@electron/remote");
+//const BrowserWindow = remote.BrowserWindow;
 const button = document.getElementById("btn");
 
 const webCamCreator = () => {
-	let webCam = new BrowserWindow({
+	let webCam = new remote.BrowserWindow({
 		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
 		useContentSize: true,
 		resizable: true,
 		fullscreen: false,
 		title: "Take a Picture"
 	});
+	webCam.isAlwaysOnTop;
 	webCam.setMenu(null);
 	webCam.loadURL(`file://${__dirname}/index.html`);
+	webCam.webContents.once('dom-ready', () => {
+		webCam.webContents.executeJavaScript('app.js')});
 	webCam.on("closed", () => (webCam = null));
 };
 
 button.addEventListener('click', () => {
-	alert("hello");
 	webCamCreator();
 });
 

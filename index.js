@@ -8,7 +8,7 @@ const { app, BrowserWindow, Menu, ipcMain } = electron;
 let mainWindow;
 let newApp;
 let listApp;
-let webCam = electron.BrowserWindow;
+let webCam;
 let allAppointments = [];
 
 console.log(app);
@@ -22,7 +22,7 @@ fs.readFile("appointments.json", (err, jsonAppointments) => {
 });
 
 app.on("ready", () => {
-	mainWindow = new BrowserWindow({
+	mainWindow = new electron.BrowserWindow({
 		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
 		title: "Gym Registration App"
 	});
@@ -37,6 +37,10 @@ app.on("ready", () => {
 	remote.enable(mainWindow.webContents);
 	const mainMenu = Menu.buildFromTemplate(menuTemplate);
 	Menu.setApplicationMenu(mainMenu);
+	mainWindow.on("closed", () => {
+		app.quit();
+	 	mainWindow = null;});
+
 });
 
 const newAppCreator = () => {
