@@ -29,6 +29,7 @@ app.on("ready", () => {
 		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
 		title: "login"
 	});
+	remote.initialize();
 	loginWindow.loadURL(`file://${__dirname}/login.html`);
 	loginWindow.on("closed", () => {
 		const jsonAppointments = JSON.stringify(allAppointments);
@@ -51,7 +52,6 @@ const newAppointmentCreator = () => {
 		height: 400,
 		title: "Create New User"
 	});
-  remote.initialize();
   remote.enable(appointment.webContents);
   appointment.loadURL(`file://${__dirname}/appointments.html`);
   appointment.on("closed", () => (appointment = null));
@@ -85,13 +85,10 @@ const webCamCreator = () => {
 	webCam = new BrowserWindow({
 		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
 		useContentSize: true,
-		width: 800,
-		height: 600,
 		resizable: false,
 		fullscreen: false,
 		title: "Take a Picture"
 	});
-	remote.initialize();
 	remote.enable(webCam.webContents);
 	//webCam.setMenu(null);
 	webCam.loadURL(`file://${__dirname}/index.html`);

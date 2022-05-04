@@ -16,6 +16,8 @@ canvas {
 video {
     z-index: 1;
     position: absolute;
+    left: 0px;
+    right: 0px;
     width: 800px;
     height: 600px;
 }

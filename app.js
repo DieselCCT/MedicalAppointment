@@ -1,14 +1,16 @@
-const dialog = require('@electron/remote');
+const remote = require('@electron/remote');
 const fs = require('fs');
 let photoData;
 let video;
 const takePic = document.getElementById("takePhoto");
 
 function savePhoto (filePath) {
+  console.log(filePath)
   if (filePath) {
     fs.writeFile(filePath, photoData, 'base64', (err) => {
+      console.log(filePath)
       if (err) {
-        alert(`There was a problem saving the photo: ${err.message}`);
+        console.log(`There was a problem saving the photo: ${err.message}`);
       }
       photoData = null;
     });
@@ -39,15 +41,19 @@ function initialize () {
 
 function takePhoto () {
   let canvas = window.document.querySelector('canvas');
-  canvas.getContext('2d').drawImage(video, 0, 0, 800, 600);
+  canvas.height = video.videoHeight;
+  canvas.width = video.videoWidth;
+  canvas.getContext('2d').drawImage(video, 0, 0);
   console.log(canvas)
   photoData = canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
   console.log(photoData)
-  dialog.showSaveDialog({
+  console.log(remote)
+  const path = remote.dialog.showSaveDialogSync({
     title: "Save the photo",
-    defaultPath: 'myfacebomb.png',
+    defaultPath: "test.png",
     buttonLabel: 'Save photo'
-  }, savePhoto);
+  });  
+  savePhoto(path);
 }
 
 window.onload = initialize;

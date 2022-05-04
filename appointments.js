@@ -44,7 +44,7 @@ const webCamCreator = () => {
 	let webCam = new BrowserWindow({
 		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
 		useContentSize: true,
-		resizable: false,
+		resizable: true,
 		fullscreen: false,
 		title: "Take a Picture"
 	});
