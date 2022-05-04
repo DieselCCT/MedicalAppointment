@@ -14,20 +14,7 @@
         <input type="submit" onclick="log(); return false " name="action" value="Send" />
     </form>
 
-    <script>
-        const electron = require("electron");
-        const { ipcRenderer } = electron;
-        const listDiv = document.getElementById("list");
-        listDiv.innerHTML = "";
-
-        function log() {
-            var login = document.getElementById('login').value;
-            var password = document.getElementById('password').value;
-
-            location.href = "appointments.html";
-
-        }
-    </script>
+    <script src="login.js"></script>
 
 
 </body>
