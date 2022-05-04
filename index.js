@@ -4,6 +4,7 @@ const electron = require("electron");
 const fs = require("fs");
 const uuid = require("uuid");
 const remote = require('@electron/remote/main')
+const { dialog } = electron.dialog;
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 let mainWindow;
 let newApp;
@@ -22,7 +23,7 @@ fs.readFile("appointments.json", (err, jsonAppointments) => {
 });
 
 app.on("ready", () => {
-	mainWindow = new electron.BrowserWindow({
+	mainWindow = new BrowserWindow({
 		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
 		title: "Gym Registration App"
 	});
