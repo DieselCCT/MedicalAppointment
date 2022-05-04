@@ -4,8 +4,8 @@ const electron = require("electron");
 const fs = require("fs");
 const uuid = require("uuid");
 const remote = require('@electron/remote/main')
-const { dialog } = electron.dialog;
 const { app, BrowserWindow, Menu, ipcMain } = electron;
+let loginWindow;
 let mainWindow;
 let newApp;
 let listApp;
@@ -23,19 +23,20 @@ fs.readFile("appointments.json", (err, jsonAppointments) => {
 });
 
 app.on("ready", () => {
-	mainWindow = new BrowserWindow({
-		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
-		title: "Gym Registration App"
+
+	loginWindow = new BrowserWindow({
+		webPreferences: {
+			nodeIntegration: true
+		},
+		title: "login"
 	});
-	mainWindow.loadURL(`file://${__dirname}/appointments.html`);
-	// mainWindow.on("closed", () => {
-	// 	const jsonAppointments = JSON.stringify(allAppointments);
-	// 	fs.writeFileSync("appointments.json", jsonAppointments);
-	// 	app.quit();
-	// 	mainWindow = null;
-	// });
-	remote.initialize();
-	remote.enable(mainWindow.webContents);
+	loginWindow.loadURL(`file://${__dirname}/login.html`);
+	loginWindow.on("closed", () => {
+		const jsonAppointments = JSON.stringify(allAppointments);
+		fs.writeFileSync("db.json", jsonAppointments);
+		app.quit();
+		loginWindow = null;
+	});
 	const mainMenu = Menu.buildFromTemplate(menuTemplate);
 	Menu.setApplicationMenu(mainMenu);
 	mainWindow.on("closed", () => {
@@ -44,9 +45,22 @@ app.on("ready", () => {
 
 });
 
+const newAppointmentCreator = () => {
+	appointment = new BrowserWindow({
+		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
+		width: 600,
+		height: 400,
+		title: "Create New User"
+	});
+  remote.initialize();
+	remote.enable(loginWindow.webContents);
+	appointment.loadURL(`file://${__dirname}/appointments.html`);
+	appointment.on("closed", () => (appointment = null));
+};
+
 const newAppCreator = () => {
 	newApp = new BrowserWindow({
-		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
+		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
 		width: 600,
 		height: 400,
 		title: "Create New User"
@@ -57,7 +71,7 @@ const newAppCreator = () => {
 
 const listAppCreator = () => {
 	listApp = new BrowserWindow({
-		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
+		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
 		width: 600,
 		height: 400,
 		title: "See All Users"
@@ -70,7 +84,7 @@ const listAppCreator = () => {
 //this shouldn't be here
 const webCamCreator = () => {
 	webCam = new BrowserWindow({
-		webPreferences: {enableRemoteModule:true, nodeIntegration: true, contextIsolation: false},
+		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
 		useContentSize: true,
 		width: 800,
 		height: 600,
@@ -93,7 +107,7 @@ const webCamCreator = () => {
 
 ipcMain.on("appointment:request:list", event => {
 	listApp.webContents.send("appointment:response:list",
-	allAppointments);
+		allAppointments);
 });
 
 // ipcMain.on("appointment:request:today", event => {
@@ -116,38 +130,44 @@ ipcMain.on("appointment:request:list", event => {
 // });
 
 const menuTemplate = [
- {
- label: "File",
- submenu: [
- {
-	 label: "Create New User",
-	 click() {
-		 newAppCreator();
-	 }
- },
- {
-	 label: "See All Users",
-	 click() {
-		 listAppCreator();
-	 }
- },
 {
-label: "Take a Picture",
-click() {
-webCamCreator();
-}
-},
- {
- label: "Quit",
- accelerator: process.platform === "darwin" ? "Command+Q" : "Ctrl+Q",
- click() {
- app.quit();
- }
- }
- ]
- },
- {
- label: "View",
- submenu: [{ role: "reload" }, { role: "toggledevtools" }]
- }
+		label: "File",
+		submenu: [
+			{
+				label: "Create New User",
+				click() {
+					newAppCreator();
+				}
+			},
+			{
+				label: "See All Users",
+				click() {
+					listAppCreator();
+				}
+			},
+			{
+				label: "Take a Picture",
+				click() {
+					webCamCreator();
+				}
+			},
+        {
+				label: "TEST WEBCAM HERE",
+				click() {
+					newAppointmentCreator();
+				}
+			},
+			{
+				label: "Quit",
+				accelerator: process.platform === "darwin" ? "Command+Q" : "Ctrl+Q",
+				click() {
+					app.quit();
+				}
+			}
+		]
+	},
+	{
+		label: "View",
+		submenu: [{ role: "reload" }, { role: "toggledevtools" }]
+	}
 ];
