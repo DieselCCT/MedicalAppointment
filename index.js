@@ -39,7 +39,24 @@ app.on("ready", () => {
 	});
 	const mainMenu = Menu.buildFromTemplate(menuTemplate);
 	Menu.setApplicationMenu(mainMenu);
+	mainWindow.on("closed", () => {
+		app.quit();
+	 	mainWindow = null;});
+
 });
+
+const newAppointmentCreator = () => {
+	appointment = new BrowserWindow({
+		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
+		width: 600,
+		height: 400,
+		title: "Create New User"
+	});
+  remote.initialize();
+	remote.enable(loginWindow.webContents);
+	appointment.loadURL(`file://${__dirname}/appointments.html`);
+	appointment.on("closed", () => (appointment = null));
+};
 
 const newAppCreator = () => {
 	newApp = new BrowserWindow({
@@ -113,7 +130,7 @@ ipcMain.on("appointment:request:list", event => {
 // });
 
 const menuTemplate = [
-	{
+{
 		label: "File",
 		submenu: [
 			{
@@ -132,6 +149,12 @@ const menuTemplate = [
 				label: "Take a Picture",
 				click() {
 					webCamCreator();
+				}
+			},
+        {
+				label: "TEST WEBCAM HERE",
+				click() {
+					newAppointmentCreator();
 				}
 			},
 			{
