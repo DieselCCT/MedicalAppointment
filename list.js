@@ -3,7 +3,7 @@
 const ipcRenderer = require('electron').ipcRenderer;
 
 ipcRenderer.send("appointment:request:list", event);
- 
+
 ipcRenderer.on("appointment:response:list", (event, appointments) => {
 	const listDiv = document.getElementById("list");
 	listDiv.innerHTML = "";
@@ -21,7 +21,7 @@ ipcRenderer.on("appointment:response:list", (event, appointments) => {
 
 		// const genderParagraph = document.createElement("p");
 		// genderParagraph.innerHTML = `Gender: ${appointment.gender}`;
-		
+
 		const emailParagraph = document.createElement("p");
 		emailParagraph.innerHTML = `Email: ${appointment.email}`;
 
@@ -67,7 +67,7 @@ ipcRenderer.on("appointment:response:list", (event, appointments) => {
 		listDiv.append(appointmentDiv);
 	});
 });
- 
+
 const done = id => {
 	ipcRenderer.send("appointment:done", id);
 };

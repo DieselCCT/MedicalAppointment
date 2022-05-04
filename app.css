@@ -3,200 +3,226 @@ body {
     padding: 0;
     background: black;
     color: white;
-     font-family: 'Helvetica', 'Arial', 'Sans';
+    font-family: 'Helvetica', 'Arial', 'Sans';
     width: 20px;
     height: 20px;
-    }
-    #saveFile, canvas {
+}
+
+#saveFile,
+canvas {
     display: none;
-    }
-    video {
+}
+
+video {
     z-index: 1;
     position: absolute;
     width: 800px;
     height: 600px;
-    }
-    #takePhoto {
+}
+
+#takePhoto {
     z-index: 2;
     position: absolute;
     bottom: 5%;
     right: 5%;
     text-align: center;
     border: solid 2px white;
-    box-shadow: 0px 0px 7px rgba(255,255,255,0.5);
+    box-shadow: 0px 0px 7px rgba(255, 255, 255, 0.5);
     margin: 5px;
     border-radius: 3em;
     padding: 1em;
-     background-color: rgba(0,0,0,0.2);
-    }
-    #takePhoto:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#takePhoto:hover {
     background: #FF5C5C;
     cursor: pointer;
-    }
-    /* All elements of the page */
-    * {
-        margin: 0;
-        padding: 0;
-    }
-    
-    /* Elements with the ID "title" */
-    #title {
-        font-family: sans-serif;
-        color: #380B61;
-        margin-left: 10%;
-    } 
-    
-    /* Elements with the ID "subtitle" */
-    #subtitle {
-        font-family: sans-serif;
-        color: #380B61;
-        margin-left: 10%;
-        margin-top: 30px;
-    } 
-    
-    #check{
-        display: inline-block;
-    }
-    
-    /* Elements of tag <fieldset>*/
-    fieldset {
-        border: 0;
-    }
-    
-    /* Elements of tag <body> */
-    body{
-        background-color: #F0F8FF;
-        font-family: sans-serif;
-        font-size: 1em;
-        color: #59429d;
-        margin-left: 36%;
-        margin-top: 2%;
-        justify-content: center;
-    }
-    
-    /* Elements of tags <body>, <input>, <Select>, <textarea> e <button> */
-    input, select, textarea, button {
-        font-family: sans-serif;
-        font-size: 1em;
-        color: #59429d;
-        border-radius: 5px;
-    }
-    
-    /* Elements pf class "group" "before" and "after" */
-    .grupo:before, .grupo:after {
-        display: table;
-    }
-    
-    /* Elements of class "grpup" at "after" */
-    .grupo:after {
-        clear: both;
-    }
-    
-    /* Elements of class "field" */
-    .field {
-        margin-bottom: 1em;
-    }
-    
-    /* Elements of class "field" of tag <label> */
-    .field label {
-        margin-bottom: 0.2em;
-        color: #59429d;
-        display: block;
-    }
-    
-    /* Elements of class "filed" ou "group" de tag <fieldset> */
-    fieldset.grupo .field {
-        float:  left;
-        margin-right: 1em;
-    }
-    
-    /* Elements de class "field" das tags <input> with atribult text and email, of tag <select> at tag <textarea>*/
-    .field input[type="text"], .field input[type="email"], .field select, .field textarea {
-        padding: 0.2em;
-        border: 1px solid #59429d;
-        box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
-        display: block;
-    }
-    
-    /* Elements of class "field" of tag <select> e <option>*/
-    .field select option {
-        padding-right: 1em;
-    }
-    
-    /* */
-    .field input:focus, .field select:focus, .field textarea:focus {
-        background: #E0E0F8;
-    }
-    
-    
-    .botao {
-        font-size: 1.2em;
-        background: #59429d;
-        border: 0;
-        margin-bottom: 1em;
-        color: #ffffff;
-        padding: 0.2em 0.6em;
-        box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
-        text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-        position: absolute;
-        top: 90%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%)
-    }
-    
-    
-    .botao:hover {
-        background: #CCBBFF;
-        box-shadow: inset 2px 2px 2px rgba(0,0,0,0.2);
-        text-shadow: none;
-    }
-    
-    
-    .botao, select{
-        cursor: pointer;
-        top: 57pc;
-    }
-    *{ margin:0;padding:0 ;box-sizing: border-box;}
-    body{
-        background-color: #5f7ca8;
-    }
-    form{
-        background-color: white;
-        max-width: 500px;
-        width: 70%;
-        padding: 20px;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-    }
-    
-    form h3{
-    
-       text-align: center;
-       color: #5f7ca8;
-       font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    
-    }
-    form input[type=text],
-    form input[type=password]{
-        width: 100%;
-        height: 45px;
-        border: 1px solid #ccc;
-        padding-left: 10px;
-        margin: 10px 0 ;
-    }
-    form input[type=submit]{
-        width: 100%;
-        height: 30px;
-        cursor: pointer;
-        background-color: #5f7c8a;
-        color: white;
-        border:0;
-        border-radius: 30px;
-        transition: 1s;
-    }
-    form input[type=submit]:hover{
-        background-color: #4a5f6a;
-    }
+}
+
+/* All elements of the page */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Elements with the ID "title" */
+#title {
+    font-family: sans-serif;
+    color: #380B61;
+    margin-left: 10%;
+}
+
+/* Elements with the ID "subtitle" */
+#subtitle {
+    font-family: sans-serif;
+    color: #380B61;
+    margin-left: 10%;
+    margin-top: 30px;
+}
+
+#check {
+    display: inline-block;
+}
+
+/* Elements of tag <fieldset>*/
+fieldset {
+    border: 0;
+}
+
+/* Elements of tag <body> */
+body {
+    background-color: #F0F8FF;
+    font-family: sans-serif;
+    font-size: 1em;
+    color: #59429d;
+    margin-left: 36%;
+    margin-top: 2%;
+    justify-content: center;
+}
+
+/* Elements of tags <body>, <input>, <Select>, <textarea> e <button> */
+input,
+select,
+textarea,
+button {
+    font-family: sans-serif;
+    font-size: 1em;
+    color: #59429d;
+    border-radius: 5px;
+}
+
+/* Elements pf class "group" "before" and "after" */
+.grupo:before,
+.grupo:after {
+    display: table;
+}
+
+/* Elements of class "grpup" at "after" */
+.grupo:after {
+    clear: both;
+}
+
+/* Elements of class "field" */
+.field {
+    margin-bottom: 1em;
+}
+
+/* Elements of class "field" of tag <label> */
+.field label {
+    margin-bottom: 0.2em;
+    color: #59429d;
+    display: block;
+}
+
+/* Elements of class "filed" ou "group" de tag <fieldset> */
+fieldset.grupo .field {
+    float: left;
+    margin-right: 1em;
+}
+
+/* Elements de class "field" das tags <input> with atribult text and email, of tag <select> at tag <textarea>*/
+.field input[type="text"],
+.field input[type="email"],
+.field select,
+.field textarea {
+    padding: 0.2em;
+    border: 1px solid #59429d;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    display: block;
+}
+
+/* Elements of class "field" of tag <select> e <option>*/
+.field select option {
+    padding-right: 1em;
+}
+
+/* */
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    background: #E0E0F8;
+}
+
+
+.botao {
+    font-size: 1.2em;
+    background: #59429d;
+    border: 0;
+    margin-bottom: 1em;
+    color: #ffffff;
+    padding: 0.2em 0.6em;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+
+.botao:hover {
+    background: #CCBBFF;
+    box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.2);
+    text-shadow: none;
+}
+
+
+.botao,
+select {
+    cursor: pointer;
+    top: 57pc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #5f7ca8;
+}
+
+form {
+    background-color: white;
+    max-width: 500px;
+    width: 70%;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+form h3 {
+
+    text-align: center;
+    color: #5f7ca8;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+form input[type=text],
+form input[type=password] {
+    width: 100%;
+    height: 45px;
+    border: 1px solid #ccc;
+    padding-left: 10px;
+    margin: 10px 0;
+}
+
+form input[type=submit] {
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+    background-color: #5f7c8a;
+    color: white;
+    border: 0;
+    border-radius: 30px;
+    transition: 1s;
+}
+
+form input[type=submit]:hover {
+    background-color: #4a5f6a;
+}
