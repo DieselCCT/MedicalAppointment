@@ -10,6 +10,7 @@ let mainWindow;
 let newApp;
 let listApp;
 let webCam;
+let appointment;
 let allAppointments = [];
 
 console.log(app);
@@ -25,9 +26,7 @@ fs.readFile("appointments.json", (err, jsonAppointments) => {
 app.on("ready", () => {
 
 	loginWindow = new BrowserWindow({
-		webPreferences: {
-			nodeIntegration: true
-		},
+		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
 		title: "login"
 	});
 	loginWindow.loadURL(`file://${__dirname}/login.html`);
@@ -39,9 +38,9 @@ app.on("ready", () => {
 	});
 	const mainMenu = Menu.buildFromTemplate(menuTemplate);
 	Menu.setApplicationMenu(mainMenu);
-	mainWindow.on("closed", () => {
+	loginWindow.on("closed", () => {
 		app.quit();
-	 	mainWindow = null;});
+		loginWindow = null;});
 
 });
 
@@ -53,9 +52,9 @@ const newAppointmentCreator = () => {
 		title: "Create New User"
 	});
   remote.initialize();
-	remote.enable(loginWindow.webContents);
-	appointment.loadURL(`file://${__dirname}/appointments.html`);
-	appointment.on("closed", () => (appointment = null));
+  remote.enable(appointment.webContents);
+  appointment.loadURL(`file://${__dirname}/appointments.html`);
+  appointment.on("closed", () => (appointment = null));
 };
 
 const newAppCreator = () => {
@@ -94,7 +93,7 @@ const webCamCreator = () => {
 	});
 	remote.initialize();
 	remote.enable(webCam.webContents);
-	webCam.setMenu(null);
+	//webCam.setMenu(null);
 	webCam.loadURL(`file://${__dirname}/index.html`);
 	webCam.on("closed", () => (webCam = null));
 };
@@ -151,7 +150,7 @@ const menuTemplate = [
 					webCamCreator();
 				}
 			},
-        {
+			{
 				label: "TEST WEBCAM HERE",
 				click() {
 					newAppointmentCreator();
