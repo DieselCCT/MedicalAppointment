@@ -5,12 +5,7 @@ const fs = require("fs");
 const uuid = require("uuid");
 const remote = require('@electron/remote/main')
 const { app, BrowserWindow, Menu, ipcMain } = electron;
-let loginWindow;
-let mainWindow;
-let newApp;
-let listApp;
-let webCam;
-let appointment;
+let loginWindow, listApp, fileExplorer, appointment;
 let allAppointments = [];
 
 console.log(app);
@@ -59,16 +54,17 @@ const newAppointmentCreator = () => {
 	appointment.on("closed", () => (appointment = null));
 };
 
-// const newAppCreator = () => {
-// 	newApp = new BrowserWindow({
-// 		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
-// 		width: 600,
-// 		height: 400,
-// 		title: "Create New User"
-// 	});
-// 	newApp.loadURL(`file://${__dirname}/newapp.html`);
-// 	newApp.on("closed", () => (newApp = null));
-// };
+const fileExplorerCreator = () => {
+	fileExplorer = new BrowserWindow({
+		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
+		width: 600,
+		height: 400,
+		title: "File Explorer"
+	});
+	remote.enable(fileExplorer.webContents);
+	fileExplorer.loadURL(`file://${__dirname}/fileExplorer/index.html`);
+	fileExplorer.on("closed", () => (fileExplorer = null));
+};
 
 const listAppCreator = () => {
 	listApp = new BrowserWindow({
@@ -141,6 +137,12 @@ const menuTemplate = [
 				label: "See All Users",
 				click() {
 					listAppCreator();
+				}
+			},
+			{
+				label: "File Explorer",
+				click() {
+					fileExplorerCreator();
 				}
 			},
 			{
