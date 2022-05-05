@@ -29,7 +29,7 @@ app.on("ready", () => {
 		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
 		title: "login"
 	});
-	remote.initialize();
+	//remote.enable(loginWindow.webContents);
 	loginWindow.loadURL(`file://${__dirname}/login.html`);
 	loginWindow.on("closed", () => {
 		const jsonAppointments = JSON.stringify(allAppointments);
@@ -39,6 +39,7 @@ app.on("ready", () => {
 	});
 	const mainMenu = Menu.buildFromTemplate(menuTemplate);
 	Menu.setApplicationMenu(mainMenu);
+	//loginWindow.setMenu(null)
 	loginWindow.on("closed", () => {
 		app.quit();
 		loginWindow = null;});
@@ -52,21 +53,22 @@ const newAppointmentCreator = () => {
 		height: 400,
 		title: "Create New User"
 	});
-  remote.enable(appointment.webContents);
-  appointment.loadURL(`file://${__dirname}/appointments.html`);
-  appointment.on("closed", () => (appointment = null));
+	remote.initialize();
+	remote.enable(appointment.webContents);
+	appointment.loadURL(`file://${__dirname}/appointments.html`);
+	appointment.on("closed", () => (appointment = null));
 };
 
-const newAppCreator = () => {
-	newApp = new BrowserWindow({
-		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
-		width: 600,
-		height: 400,
-		title: "Create New User"
-	});
-	newApp.loadURL(`file://${__dirname}/newapp.html`);
-	newApp.on("closed", () => (newApp = null));
-};
+// const newAppCreator = () => {
+// 	newApp = new BrowserWindow({
+// 		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
+// 		width: 600,
+// 		height: 400,
+// 		title: "Create New User"
+// 	});
+// 	newApp.loadURL(`file://${__dirname}/newapp.html`);
+// 	newApp.on("closed", () => (newApp = null));
+// };
 
 const listAppCreator = () => {
 	listApp = new BrowserWindow({
@@ -80,20 +82,20 @@ const listAppCreator = () => {
 	listApp.on("closed", () => (listApp = null));
 };
 
-//this shouldn't be here
-const webCamCreator = () => {
-	webCam = new BrowserWindow({
-		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
-		useContentSize: true,
-		resizable: false,
-		fullscreen: false,
-		title: "Take a Picture"
-	});
-	remote.enable(webCam.webContents);
-	//webCam.setMenu(null);
-	webCam.loadURL(`file://${__dirname}/index.html`);
-	webCam.on("closed", () => (webCam = null));
-};
+// //this shouldn't be here
+// const webCamCreator = () => {
+// 	webCam = new BrowserWindow({
+// 		webPreferences: { enableRemoteModule: true, nodeIntegration: true, contextIsolation: false },
+// 		useContentSize: true,
+// 		resizable: false,
+// 		fullscreen: false,
+// 		title: "Take a Picture"
+// 	});
+// 	remote.enable(webCam.webContents);
+// 	//webCam.setMenu(null);
+// 	webCam.loadURL(`file://${__dirname}/webcam.html`);
+// 	webCam.on("closed", () => (webCam = null));
+// };
 
 // const sendTodayAppointments = () => {
 // 	const today = new Date().toISOString().slice(0, 10);
@@ -132,25 +134,13 @@ const menuTemplate = [
 			{
 				label: "Create New User",
 				click() {
-					newAppCreator();
+					newAppointmentCreator();
 				}
 			},
 			{
 				label: "See All Users",
 				click() {
 					listAppCreator();
-				}
-			},
-			{
-				label: "Take a Picture",
-				click() {
-					webCamCreator();
-				}
-			},
-			{
-				label: "TEST WEBCAM HERE",
-				click() {
-					newAppointmentCreator();
 				}
 			},
 			{

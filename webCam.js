@@ -1,8 +1,8 @@
-const remote = require('@electron/remote');
+const { ipcRenderer } = require("electron");
 const fs = require('fs');
 let photoData;
 let video;
-const takePic = document.getElementById("takePhoto");
+const takePicture = document.getElementById("takePhoto");
 
 function savePhoto (filePath) {
   console.log(filePath)
@@ -22,10 +22,6 @@ function initialize () {
     console.log(`There was an error connecting to the video stream:
     ${error.message}`);
   };
-  /*window.navigator.webkitGetUserMedia({video: true}, (localMediaStream) => {
-    video.src = mediaStream;
-  }, errorCallback);
-  console.log(errorCallback)*/
   video = window.document.getElementById("video");
   navigator.webkitGetUserMedia({ audio: false, video: true },
   (stream) => {
@@ -47,17 +43,17 @@ function takePhoto () {
   console.log(canvas)
   photoData = canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
   console.log(photoData)
-  console.log(remote)
-  const path = remote.dialog.showSaveDialogSync({
-    title: "Save the photo",
-    defaultPath: "test.png",
-    buttonLabel: 'Save photo'
-  });  
-  savePhoto(path);
+  let path;
+  //requesting dialog from appointment.js
+  ipcRenderer.send("dialog-request", path);
+  //receiving dialog from appointmen.js
+  ipcRenderer.on("dialog-response", (event, path) => {
+    savePhoto(path);
+  });
 }
 
 window.onload = initialize;
 
-takePic.addEventListener('click', () => {
+takePicture.addEventListener('click', () => {
 	takePhoto();
 });

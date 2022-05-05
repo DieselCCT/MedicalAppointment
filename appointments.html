@@ -1,9 +1,58 @@
 <html>
 
 <body>
-    <h1>Gym Registration App</h1>
-    <button id="btn" type="button">File Management System</button>
+    <h3>Create New User</h3>
+    <form id="form">
+
+        <label for="firstNAme">First Name:</label><br />
+        <input type="text" name="firstName" required />
+        <br /><br />
+        <label for="lastName">Last Name:</label><br />
+        <input type="text" name="lastName" required />
+        <br /><br />
+        <label for="date">Date of Birth:</label><br />
+        <input type="text" name="date" placeholder="YYYY-MM-DD" required />
+        <br /><br />
+
+        <!-- <label for="gender">Gender:</label><br />
+        <input type="radio" name="genderM" required />
+        <label for="genderM">Male</label>
+        <input type="radio" name="genderF" required />
+        <label for="genderF">Female</label>
+        <input type="radio" name="genderP" required />
+        <label for="genderP">Prefer not to say</label>
+        <br /><br />--> 
+
+        <label for="email">Email:</label><br />
+        <input type="text" name="email" required />
+        <br /><br />
+        <label for="number">Phone Number:</label><br />
+        <input type="text" name="number" required />
+        <br /><br />
+        <label for="address1">Address 1:</label><br />
+        <input type="text" name="address1" required />
+        <br /><br />
+        <label for="address2">Address 2:</label><br />
+        <input type="text" name="address2" required />
+        <br /><br />
+        <label for="eircode">Eircode:</label><br />
+        <input type="text" name="eircode" required />
+        <br /><br />
+        <label for="city">City:</label><br />
+        <input type="text" name="city" required />
+        <br /><br />
+        <label for="country">Country:</label><br />
+        <input type="text" name="country" required />
+        <br /><br />
+
+        <input type="submit" />
+    </form>
+    <div>
+        <button id="takepic" type="button">Take a Picture</button>
+        <button id="selectpic" type="button">Select Picture</button>
+    </div>
     <script src="appointments.js"></script>
-    <script src="app.js"></script>
+    <!-- <script src="webCam.js"></script> -->
 </body>
+
 </html>
