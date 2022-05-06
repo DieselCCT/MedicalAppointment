@@ -16,7 +16,7 @@
   "electron-packager": "^5.2.0",
   "electron-prebuilt": "^1.4.13",
   "fs": "^0.0.1-security",
-  "lunr": "^2.3.9",
+  "lunr": "^0.7.2",
   "osenv": "^0.1.5",
   "path": "^0.12.7",
   "uuid": "^3.3.2"
