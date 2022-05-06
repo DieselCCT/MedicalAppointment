@@ -1,7 +1,5 @@
-"use strict"
-
-var lunr = require('lunr');
-var index;
+var lunr = require('lunr')
+var index = lunr;
 
 function resetIndex() {
 	index = lunr(function() {
@@ -12,15 +10,14 @@ function resetIndex() {
 }
 
 function addToIndex(file) {
-	console.log(index)
-	console.log(file)
 	index.add(file);
 }
 
 function find(query, cb) {
 	if (!index) { resetIndex(); }
-
+	console.log(index)
 	var results = index.search(query);
+	console.log(results)
 	cb(results);
 }
 

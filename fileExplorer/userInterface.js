@@ -52,8 +52,9 @@ function displayFile(file) {
 }
 
 function displayFiles(err, files) {
-	if (err) return alert('Sorry, we could not display your files');
-	files.forEach(displayFile);
+	if (err){
+		return alert('Sorry, we could not display your files');
+	} else files.forEach(displayFile);
 }
 
 function bindSearchField(cb) {
