@@ -1,0 +1,36 @@
+h1{
+    text-align: center;
+    color: #010205;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+listDiv {
+    background-color: white;
+    max-width: 500px;
+    width: 70%;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+list{
+    background-color: white;
+    max-width: 500px;
+    width: 70%;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+body {
+    background-color: #eaeef1;
+    font-family: sans-serif;
+    font-size: 1em;
+    color: #04020a;
+    justify-content: center;
+    word-spacing: normal;
+    margin-top: 50px;
+    margin-right: 5 px;
+}

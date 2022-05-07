@@ -11,7 +11,7 @@
  "dependencies": {
   "@electron/remote": "^2.0.8",
   "async": "^3.2.3",
-  "electron": "^18.2.0",
+  "electron": "^5.0.13",
   "electron-builder": "^5.0.3",
   "electron-packager": "^5.2.0",
   "electron-prebuilt": "^1.4.13",
